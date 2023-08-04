@@ -1,0 +1,6 @@
+Column 3 = air temp
+Column 4 = wind speed
+Column 5 = wind direction
+Column 7 = Irradiance
+Column 15 = PHL Control Tmod1
+COlumn 16 = PHL Control Tmod2
