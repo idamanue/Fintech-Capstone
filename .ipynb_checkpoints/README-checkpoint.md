@@ -1,0 +1,3 @@
+SolarMetrics: NOCT Precision
+
+SolarMetrics is a cutting-edge fintech project that aims to address the current challenges in calculating the NOCT (Nominal Operating Cell Temperature) for solar modules. The existing procedure for determining NOCT lacks repeatability, leading to inconsistent results. Our project focuses on developing a robust tool that utilizes linear regression and other machine learning techniques to process solar data accurately and determine NOCT values. By comparing our results with the existing procedure, we aim to showcase the improved precision and reliability of our approach.
