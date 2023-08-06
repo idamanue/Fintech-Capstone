@@ -1,11 +1,74 @@
+# Importing the Project libraries
+#import solar_metrics_lib as sml
+
+import pandas as pd
+import numpy as np
+
 import streamlit as st
-from streamlit_option_menu import option_menu
+#from streamlit_option_menu import option_menu
 from PIL import Image
+import plotly.express as px
 
+# import our data as a pandas dataframe
+mlr_df = pd.read_csv("metrics/linear_regression.csv", usecols=range(1,5))
+dnn_df = pd.read_csv("metrics/deep_learning.csv", usecols=range(1,5))
 
+# Building a dataframe of panels
+# Future improvement: data will be taken from the user and saved in a database
+def panel_dataframe():
+    solar_panel= {
+        'module_id':["PHL6621","CRS0018","QCL0182","QCL0201","QCL0346"],
+        'stc_power' :[369.6,382.6,382.78,376.66,446.39],
+        'gamma':[-0.3935,-0.3779,-0.3730, -0.3637,-0.3642],
+        'area':['1.98','2.06','1.895', 1.895,2.239],
+        'cec_noct':[47.8,47.5,46.3,46.3,46.5]
+        }
+    df = pd.DataFrame(solar_panel)
     
-#adding a side bar
+    return df
 
+# set up the app with wide view preset and a title
+st.set_page_config(layout="wide")
+st.title("Which Solar Panels to Choose for my Solar System?")
+
+# import our data as a pandas dataframe
+df = panel_dataframe()
+
+# get a list of all available panels and ref noct, for the widgets
+module_list = list(df['module_id'].unique())
+cec_list = list(df['cec_noct'].unique())
+
+# put all widgets in sidebar and have a subtitle
+with st.sidebar:
+    st.subheader("Select Panels to Compare")
+    # widget to choose which solar panels to compare. You can select at most 3
+    solar_panels = st.multiselect(label = "Choose a solar panel", options = module_list, max_selections=3)
+    # widget to choose which Estimator to use
+    estimator = st.selectbox(label = "Choose an estimator", options = ['Deep Learning','Multiple Linear Regression'])
+    # widget to choose which metric to display: PTC, NOCT, ROI
+    #solar_panel_2 = st.selectbox(label = "Choose a solar panel", options = metric_list)
+
+
+if estimator== 'Deep Learning':
+    estimator_df = dnn_df.copy()
+else:
+    estimator_df = mlr_df.copy()
+
+
+#combined_data = sml.get_csv(solar_panel_1)
+#combined_data = sml.get_csv(solar_panel_1)
+#combined_df = sml.preprocessing(combined_data)
+#mlr = sml.multiple_linear_regression(combined_df, solar_panel_1)
+    
+# use selected values from widgets to filter dataset down to only the rows we need
+#query = f"module_id=='{solar_panels[0]}' | module_id=='{solar_panels[1]}' | module_id=='{solar_panels[2]}'"
+#df_filtered = df.query(query)
+df_filtered = estimator_df.query("module_id == @solar_panels")
+st.write(df_filtered)
+#st.write(combined_df)
+#st.write(mlr)
+
+'''
 with st.sidebar:
     selected = option_menu(
         menu_title = "Solar Metrics",
@@ -63,4 +126,4 @@ if selected == "Contacts":
     st.write('https://www.youtube.com/watch?v=01SeFqQOjBM')
 
 
-
+'''

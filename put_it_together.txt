@@ -1,0 +1,91 @@
+# Get user input
+user_input = "SLR3513"
+combined_data = get_csv(user_input)
+combined_data
+
+# Preprocessing steps
+
+# Multiple Linear Regression using LinearRegression() estimator
+
+# Compare estimators Ridge vs Lasso vs ...
+
+# Deep Learning
+
+# Split into training and testing windows
+X_train, X_test, y_train, y_test = train_test_split(combined_df[feature_names], combined_df[target], random_state=11)
+
+# Let's set the model training for a very long time, 
+# but with an EarlyStopping callback so it stops automatically when it stops improving.
+model = create_model()
+history = fit_model(model, 'val_loss', 100000)
+
+# define filename for saving the model and history
+filepath = 'models/dnn_noct_' + user_input
+
+# Save a model using the HDF5 format
+saving_model(model, filepath+'.h5')
+
+# Save history
+saving_history(history, filepath)
+
+
+# Load a model from the HDF5 format
+model = loading_model(filepath + ".h5")
+model.summary()
+
+# Load history
+history_dict = loading_history(filepath)
+
+# Plot training history
+plot_training(history_dict, filepath+'.png')
+
+# Calculate predictions: returns a dictionary of keys "train" and "test"
+predictions = calculate_predictions(model)
+
+# Calculate predictions
+PredTestSet = model.predict(X_train)
+PredValSet = model.predict(X_test)
+
+
+# Plot training history
+plt.plot(history.history['loss'], label='train')
+plt.plot(history.history['val_loss'], label='test')
+plt.legend()
+plt.savefig(filepath)
+
+# Plot actual vs prediction for training set
+plt.plot(y_train,PredTestSet,'ro')
+plt.title('Training Set')
+plt.xlabel('Actual')
+plt.ylabel('Predicted')
+plt.savefig(filepath)
+
+# Compute R-Square value for training set
+TestR2Value = metrics.r2_score(y_train,PredTestSet)
+print("Training Set R-Square=", TestR2Value)
+
+# Plot actual vs prediction for validation set
+plt.plot(y_test,PredValSet,'ro')
+plt.title('Test Set')
+plt.xlabel('Actual')
+plt.ylabel('Predicted')
+plt.savefig(filepath)
+
+# Compute R-Square value for validation set
+ValR2Value = metrics.r2_score(y_test,PredValSet)
+print("Test Set R-Square=",ValR2Value)
+
+
+x = pd.DataFrame(columns=['irradiance', 'wind_speed', 'wind_direction', 'ambient_temperature'])
+x.loc[0] = [800,1,120,20]
+x = np.asarray(x)
+x=tf.convert_to_tensor(x, dtype=tf.int32)
+display(x)
+#display(X_test.head(2))
+y_pred = model.predict(x)
+noct = float("{:.2f}".format( y_pred[0][0] ))
+#print("NOCT = {:.2f}".format( noct ))
+
+
+target = "module_temperature"
+feature_names = ['irradiance', 'wind_speed', 'wind_direction', 'ambient_temperature']
