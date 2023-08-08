@@ -13,15 +13,11 @@
 By comparing the results obtained from SolarMetrics with those from the existing procedure, the project aims to demonstrate the improved precision and reliability of its approach. This comparison will help validate the effectiveness of SolarMetrics in accurately calculating NOCT values for solar modules.
 
 
-
 ### The Solar Metrics Solution
 
-    * Include any relevant code or demonstrations of the analysis or application.
-
+    
    The SolarMetrics project focuses on developing a robust tool that utilizes advanced techniques such as linear regression and machine learning to process solar data accurately and determine NOCT values. Linear regression is a statistical method that helps identify relationships between variables, while machine learning algorithms can analyze large amounts of data to make predictions or classifications.
 
-
-    * Discuss any unanticipated insights or problems that arose and how you resolved them.
     
 ### List of Technology used
 
@@ -32,16 +28,10 @@ Python....
 
 ### The results and conclusions from the analysis or application. 
 
-    * Include relevant images or examples to support your work.
-
-    * If the project goal wasn’t achieved, share the issues and what the group tried for resolving them.
-
+   Solar Metrics models is able to determine NOCT values through linear regression and deep learning
 ### Solar Metrics and more
 
-    * Take a moment to discuss the potential next steps for the project.
-
-    * Discuss any additional questions that you’d explore if you had more time. Specifically, if you had additional weeks to work on your project, what would you research next?
-    
+Extra time would allow us to fine tune our model
   
 ## Sources 
 
